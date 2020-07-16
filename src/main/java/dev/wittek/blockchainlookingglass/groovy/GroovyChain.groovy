@@ -3,7 +3,7 @@ package dev.wittek.blockchainlookingglass.groovy
 import groovy.transform.ToString
 import org.apache.commons.codec.digest.DigestUtils
 
-@ToString
+@ToString(includePackage = false)
 class GroovyChain {
 
     final String difficulty;
@@ -17,18 +17,21 @@ class GroovyChain {
         blocks << genesisBlock
     }
 
-    void leftShift(String data) {
 
+    void addAndMineBlock(String data) {
         def newBlock = new Block(
                 data: data,
-                previousHash: blocks.head().previousHash
+                previousHash: blocks.last().calculateHash()
         )
         newBlock.mine(difficulty)
         blocks << newBlock
-
     }
 
-    @ToString
+    void leftShift(String data) {
+        addAndMineBlock(data)
+    }
+
+    @ToString(includePackage = false)
     static class Block {
         String data
         String previousHash
