@@ -5,10 +5,10 @@ import org.hipparchus.stat.descriptive.DescriptiveStatistics
 // Let's run a PoW benchmark!
 
 def runBenchmark(int i, String difficulty) {
-    def proxy = ProxyMetaClass.getInstance(GroovyChain.class)
+    def proxy = ProxyMetaClass.getInstance(dev.wittek.blockchainlookingglass.groovy.GroovyChain.class)
     proxy.interceptor = new BenchmarkInterceptor()
     proxy.use {
-        def c = new GroovyChain("foo", difficulty)
+        def c = new dev.wittek.blockchainlookingglass.groovy.GroovyChain("foo", difficulty)
 
         i.times {
             c << "$it"
